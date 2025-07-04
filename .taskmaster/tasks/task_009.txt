@@ -1,0 +1,56 @@
+# Task ID: 9
+# Title: Implement Error Handling and User Feedback
+# Status: pending
+# Dependencies: 8
+# Priority: medium
+# Description: Add comprehensive error handling, user guidance, and status indicators for robust user experience
+# Details:
+Implement comprehensive error handling and user feedback:
+
+```typescript
+// Error handling wrapper
+async function safeProcessMessage(message: TelegramMessage, botToken: string) {
+  const chatId = message.chat.id;
+  
+  try {
+    // Show typing indicator
+    await fetch(`https://api.telegram.org/bot${botToken}/sendChatAction`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ chat_id: chatId, action: 'typing' })
+    });
+    
+    await processMessage(message, botToken);
+    
+  } catch (error) {
+    console.error('Message processing error:', error);
+    
+    let errorMessage = '❌ Sorry, I encountered an error.';
+    
+    if (error.type === 'tool_timeout') {
+      errorMessage = '⏱️ Tool execution timed out. Please try again.';
+    } else if (error.type === 'rate_limit') {
+      errorMessage = '🚦 Please wait a moment before sending another message.';
+    } else if (error.type === 'tool_error') {
+      errorMessage = `🔧 Tool error: ${error.message}. Please check your request and try again.`;
+    }
+    
+    await sendTelegramMessage(chatId, errorMessage, botToken);
+  }
+}
+
+// Command handlers
+const COMMANDS = {
+  '/start': 'Welcome! I\'m your AI assistant. Ask me anything or use tools like scheduling and search.',
+  '/help': 'Available commands:\n/start - Get started\n/help - Show this help\n\nJust send me a message to chat or request tool usage!',
+  '/status': 'Bot is running normally. All tools are available.'
+};
+
+function handleCommand(command: string, chatId: number, botToken: string) {
+  const response = COMMANDS[command] || 'Unknown command. Type /help for available commands.';
+  return sendTelegramMessage(chatId, response, botToken);
+}
+```
+
+# Test Strategy:
+Test various error scenarios, verify appropriate error messages, check command responses and user guidance

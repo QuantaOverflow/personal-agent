@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.wrangler/
+.dev.vars
+CODEBASE_ANALYSIS.md
+.taskmaster/
+backup/
+.repomix-output.txt

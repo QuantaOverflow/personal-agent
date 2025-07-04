@@ -1,0 +1,10 @@
+node_modules
+backup/
+.repomix-output.txt
+dist/
+.env
+.dev.vars
+.cursor/mcp.json
+.wrangler/
+.taskmaster/
+CODEBASE_ANALYSIS.md

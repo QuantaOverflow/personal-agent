@@ -1,0 +1,53 @@
+# Task ID: 3
+# Title: Implement Message Format Conversion System
+# Status: done
+# Dependencies: 2
+# Priority: high
+# Description: Create bidirectional conversion between Telegram message format and internal agent message format - COMPLETED with advanced features
+# Details:
+✅ **IMPLEMENTATION COMPLETED** - Full message conversion system implemented and verified:
+
+**Core Conversion Features:**
+- **AgentMessage Interface**: Complete internal agent message format supporting role, content, toolCalls, toolResults
+- **Bidirectional Conversion**: 
+  - `telegramToAgentMessage()` - Telegram to internal format
+  - `agentToTelegramMessage()` - Internal format to Telegram text
+- **MessageConverter Class**: Complete message conversion toolkit
+
+**Advanced Features Implemented:**
+- **Markdown Formatting**: `formatMarkdownForTelegram()` - Converts markdown to Telegram MarkdownV2
+- **Entity Processing**: `processEntities()` - Handles Telegram message entities (links, code, formatting)
+- **Message Splitting**: `splitLongMessage()` - Auto-splits long messages for Telegram limits
+- **Tool Call Support**: Formatting of tool calls and results in message conversion
+
+**Quality Assurance:**
+- TypeScript type checking passed ✅
+- Complete ConversionContext support (chatId, userId, etc.)
+- Command processing, mentions, and various Telegram entity types supported
+- Error handling and edge cases covered
+
+**Implementation Reference:**
+```typescript
+interface AgentMessage {
+  role: 'user' | 'assistant';
+  content: string;
+  toolCalls?: ToolCall[];
+  toolResults?: ToolResult[];
+}
+
+class MessageConverter {
+  static telegramToAgentMessage(telegramMsg: TelegramMessage, context: ConversionContext): AgentMessage
+  static agentToTelegramMessage(agentMsg: AgentMessage, context: ConversionContext): string
+  static formatMarkdownForTelegram(text: string): string
+  static processEntities(message: TelegramMessage): string
+  static splitLongMessage(text: string, maxLength: number): string[]
+}
+```
+
+# Test Strategy:
+✅ **TESTING COMPLETED** - Comprehensive testing performed:
+- Various message formats tested (plain text, markdown, code blocks)
+- Telegram formatting verification completed
+- Edge cases and error handling validated
+- TypeScript compilation and type safety verified
+- Ready for integration with agent processing pipeline
