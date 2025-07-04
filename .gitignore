@@ -7,4 +7,7 @@ dist/
 .cursor/mcp.json
 .wrangler/
 .taskmaster/
+.cursor/
+.cursorignore
+.repomix-output.txt
 CODEBASE_ANALYSIS.md
